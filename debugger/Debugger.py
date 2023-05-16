@@ -48,18 +48,6 @@ class Debugger(Tracer):
             command = input("(debugger) ")
             self.execute(command)  # type: ignore
 
-    def step_command(self, arg: str = "") -> None:
-        """Execute up to the next line"""
-
-        self.stepping = True
-        self.interact = False
-
-    def continue_command(self, arg: str = "") -> None:
-        """Resume execution"""
-
-        self.stepping = False
-        self.interact = False
-
     def execute(self, command: str) -> None:
         """Execute `command`"""
 
@@ -75,16 +63,6 @@ class Debugger(Tracer):
         if method:
             method(arg)
 
-    def commands(self) -> List[str]:
-        """Return a list of commands"""
-
-        cmds = [
-            method.replace("_command", "")
-            for method in dir(self.__class__)
-            if method.endswith("_command")
-        ]
-        cmds.sort()
-        return cmds
 
     def command_method(self, command: str) -> Optional[Callable[[str], None]]:
         """Convert `command` into the method to be called.
@@ -104,6 +82,29 @@ class Debugger(Tracer):
 
         cmd = possible_cmds[0]
         return getattr(self, cmd + "_command")
+
+    def commands(self) -> List[str]:
+        """Return a list of commands"""
+
+        cmds = [
+            method.replace("_command", "")
+            for method in dir(self.__class__)
+            if method.endswith("_command")
+        ]
+        cmds.sort()
+        return cmds
+    
+    def step_command(self, arg: str = "") -> None:
+        """Execute up to the next line"""
+
+        self.stepping = True
+        self.interact = False
+
+    def continue_command(self, arg: str = "") -> None:
+        """Resume execution"""
+
+        self.stepping = False
+        self.interact = False
 
     def help_command(self, command: str = "") -> None:
         """Give help on given `command`. If no command is given, give help on all"""
