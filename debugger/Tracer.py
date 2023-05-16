@@ -1,7 +1,7 @@
 import inspect
 import sys
 from types import FrameType, TracebackType
-from typing import Any, Callable, Dict, List, Optional, TextIO, Type, cast
+from typing import Any, Callable, Dict, List, Optional, TextIO, Type
 
 from StackInspector import StackInspector
 

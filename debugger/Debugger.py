@@ -1,12 +1,10 @@
 import inspect
 import sys
 from types import FrameType
-from typing import Any, Callable, Dict, List, Optional, Set, TextIO, Tuple
+from typing import Any, Callable, Dict, List, Optional, Set, TextIO
 
-from bookutils import getsourcelines
 from sha256 import generate_hash
 from Tracer import Tracer
-
 from utils import clear_next_inputs, input, next_inputs
 
 
@@ -153,7 +151,7 @@ class Debugger(Tracer):
                 source_lines, line_number = inspect.getsourcelines(obj)
                 current_line = -1
             else:
-                source_lines, line_number = getsourcelines(self.frame.f_code)
+                source_lines, line_number = inspect.getsourcelines(self.frame.f_code)
                 current_line = self.frame.f_lineno
         except Exception as err:
             self.log(f"{err.__class__.__name__}: {err}")
