@@ -477,3 +477,5 @@ class InvariantAnnotator(InvariantTracer):
     def __repr__(self) -> str:
         """String representation, like `functions_with_invariants()`"""
         return self.functions_with_invariants()
+    
+    
